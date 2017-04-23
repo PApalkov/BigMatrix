@@ -12,7 +12,7 @@ public class Do {
 
         System.out.print(matrix.toString());
 
-        MatrixOperator.transpose(matrix).print();
+        BigMatrixOperator.transpose(matrix).print();
 
     }
 }

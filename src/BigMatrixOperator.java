@@ -1,4 +1,4 @@
-public class MatrixOperator {
+public class BigMatrixOperator {
 
     public static SquareMatrix transpose(SquareMatrix matrix){
         int m_transposed_size = matrix.getSize();
