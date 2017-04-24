@@ -60,6 +60,10 @@ public class SquareMatrix {
         }
     }
 
+    public void setElement(int i, int j, int value){
+        this.matrix[i][j] = value;
+    }
+
     public String toString() {
         String matrix_str = "[\n";
 
