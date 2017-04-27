@@ -2,40 +2,53 @@ import java.util.Scanner;
 
 public class Do {
     public static void main(String[] args) {
-/*
-        SquareMatrix matrix = new SquareMatrix(5);
 
-        matrix.print();
+        int size = 2048;
 
-        matrix.generate(5,0,10);
-
-        matrix.print();
-
-        System.out.print(matrix.toString());
-
-        BigMatrixOperator.transpose(matrix).print();
-*/
-
-        SquareMatrix A = new SquareMatrix(256);
-        A.generate(0,50);
+        SquareMatrix A = new SquareMatrix(size);
+        A.generate(0,20);
 
 
-        SquareMatrix B = new SquareMatrix(256);
-        B.generate(0,50);
-
-
+        SquareMatrix B = new SquareMatrix(size);
+        B.generate(0,20);
 
         try {
-            SquareMatrix C1 = BigMatrixOperator.native_mult(A, B);
-            SquareMatrix C2 = BigMatrixOperator.rec_mult(A, B);
-            System.out.println(BigMatrixOperator.equal(C1, C2));
 
+            long naitive_mult_time_start = System.nanoTime();
+
+            SquareMatrix C1 = BigMatrixOperator.native_mult(A, B);
+
+            long naitive_mult_time_end = System.nanoTime();
+            System.out.println("\nNative algorithm takes " +
+                    (naitive_mult_time_end - naitive_mult_time_start) / Math.pow(10,9)  + " seconds!");
+
+
+
+
+            long rec_mult_time_start = System.nanoTime();
+
+            SquareMatrix C2 = BigMatrixOperator.shtrassen_mult(A, B);
+
+            long rec_mult_time_end = System.nanoTime();
+
+
+            System.out.println("\nRecursive algorithm takes " +
+                    (rec_mult_time_end - rec_mult_time_start)  / Math.pow(10,9) + " seconds!");
+
+
+
+            if (BigMatrixOperator.equal(C1, C2)){
+                System.out.println("Results are equal");
+            } else {
+                System.out.println("Results are NOT equal");
+            }
+
+            //C1.print();
+            //C2.print();
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.toString());
         }
-
-
 
     }
 }

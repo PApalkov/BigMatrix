@@ -14,7 +14,6 @@ public class SquareMatrix {
         this.size = matrix.length;
     }
 
-
     public void print(){
         System.out.println();
         for (int i = 0; i < size; i++) {
@@ -42,11 +41,9 @@ public class SquareMatrix {
         generate(lower_lim, upper_lim);
     }
 
-
     public int[][] getMatrix() {
         return matrix;
     }
-
 
     public int getSize() {
         return size;
@@ -63,6 +60,8 @@ public class SquareMatrix {
     public void setElement(int i, int j, int value){
         this.matrix[i][j] = value;
     }
+
+
 
     public String toString() {
         String matrix_str = "[\n";
