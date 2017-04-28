@@ -8,9 +8,9 @@ public class Do {
 
     public static void main(String[] args) {
 
-
-        for (int size = 32; size < 500; size += 150) {
-
+        //int size = 1024;
+        //todo continue testing
+        for (int size = 100; size < 1300; size += 100) {
 
             SquareMatrix A = new SquareMatrix(size);
             A.generate(0, 20);
@@ -26,7 +26,7 @@ public class Do {
                 long naitive_mult_time_end = System.nanoTime();
 
                 double native_mult_time = (naitive_mult_time_end - naitive_mult_time_start) / Math.pow(10, 9);
-                //System.out.println("\nNative algorithm takes " + native_mult_time + " seconds!");
+                System.out.println("\nNative algorithm takes " + native_mult_time + " seconds!");
 
 
                 long rec_mult_time_start = System.nanoTime();
@@ -34,7 +34,7 @@ public class Do {
                 long rec_mult_time_end = System.nanoTime();
 
                 double rec_mult_time = (rec_mult_time_end - rec_mult_time_start) / Math.pow(10, 9);
-                //System.out.println("\nRecursive algorithm takes " + rec_mult_time + " seconds!");
+                System.out.println("\nRecursive algorithm takes " + rec_mult_time + " seconds!");
 
 
                 long rec_fork_mult_time_start = System.nanoTime();
@@ -42,7 +42,7 @@ public class Do {
                 long rec_fork_mult_time_end = System.nanoTime();
 
                 double rec_fork_mult_time = (rec_fork_mult_time_end - rec_fork_mult_time_start) / Math.pow(10, 9);
-                //System.out.println("\nRecursive algorithm takes " + rec_fork_mult_time + " seconds!");
+                System.out.println("\nRecursive algorithm takes " + rec_fork_mult_time + " seconds!");
 
 
                 String toWrite = size + "\n" + native_mult_time + "\n" + rec_mult_time + "\n" + rec_fork_mult_time + "\n";

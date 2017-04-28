@@ -2,20 +2,25 @@
 
 public class BigMatrixMultiplier {
 
-    private static final int MIN_SIZE = 4;
+    private static final int MIN_SIZE = 64;
 
     //======================NATIVE ALGORITHM========================
 
 
     public static SquareMatrix native_mult(SquareMatrix A, SquareMatrix B) throws Exception{
 
+
+
         if (A.getSize() != B.getSize()){
             throw new Exception("Different matrix sizes");
         } else {
 
+
+
             int result_matrix_size = A.getSize();
 
             int[][] result = new int[result_matrix_size][result_matrix_size];
+
 
 
             for (int i = 0; i < result_matrix_size; i++) {

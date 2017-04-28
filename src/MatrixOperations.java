@@ -172,7 +172,6 @@ public class MatrixOperations {
     public static int new_dim(int dim){
         int n_dim = 1;
 
-
         while (dim / 2 > 0){
             n_dim++;
             dim /= 2;

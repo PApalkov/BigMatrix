@@ -8,7 +8,7 @@ public class MyRecursiveShtrassenTask extends RecursiveTask<int[][]> {
     private Borders b_borders;
     int size;
 
-    private static final int MIN_SIZE = 4;
+    private static final int MIN_SIZE = 64;
 
     public MyRecursiveShtrassenTask(int[][] a, int[][] b, Borders a_borders, Borders b_borders) {
         this.a = a;
