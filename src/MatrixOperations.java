@@ -1,3 +1,5 @@
+import javax.swing.plaf.PanelUI;
+
 /**
  * Created by pavel on 27.04.17.
  */
@@ -164,5 +166,44 @@ public class MatrixOperations {
         }
 
         return true;
+    }
+
+    //making new dimension of power of 2
+    public static int new_dim(int dim){
+        int n_dim = 1;
+
+
+        while (dim / 2 > 0){
+            n_dim++;
+            dim /= 2;
+        }
+
+        return  (int)Math.pow(2, n_dim);
+    }
+
+    public static int[][] resize(int[][]matrix, int newSize) {
+        int size = matrix.length;
+        if (newSize > size) {
+            int[][] newMatrix = new int[newSize][newSize];
+
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
+                    newMatrix[i][j] = matrix[i][j];
+                }
+            }
+
+            return newMatrix;
+        } else if (newSize < size) {
+            int[][] newMatrix = new int[newSize][newSize];
+
+            for (int i = 0; i < newSize; i++) {
+                for (int j = 0; j < newSize; j++) {
+                    newMatrix[i][j] = matrix[i][j];
+                }
+            }
+            return newMatrix;
+        }
+
+        else return matrix;
     }
 }

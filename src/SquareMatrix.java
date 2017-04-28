@@ -61,7 +61,32 @@ public class SquareMatrix {
         this.matrix[i][j] = value;
     }
 
+    public void resize(int newSize) {
 
+        if (newSize > size) {
+            int[][] newMatrix = new int[newSize][newSize];
+
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
+                    newMatrix[i][j] = matrix[i][j];
+                }
+            }
+
+            this.size = newSize;
+            this.matrix = newMatrix;
+        } else if (newSize < size){
+            int[][] newMatrix = new int[newSize][newSize];
+
+            for (int i = 0; i < newSize; i++) {
+                for (int j = 0; j < newSize; j++) {
+                    newMatrix[i][j] = matrix[i][j];
+                }
+            }
+
+            this.size = newSize;
+            this.matrix = newMatrix;
+        }
+    }
 
     public String toString() {
         String matrix_str = "[\n";

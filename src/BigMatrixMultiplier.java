@@ -2,7 +2,7 @@
 
 public class BigMatrixMultiplier {
 
-    private static final int MIN_SIZE = 64;
+    private static final int MIN_SIZE = 4;
 
     //======================NATIVE ALGORITHM========================
 
@@ -32,7 +32,6 @@ public class BigMatrixMultiplier {
     }
 
 
-
     //========================USUAL SHTRASSEN ALGORITHM=======================
 
 
@@ -41,15 +40,20 @@ public class BigMatrixMultiplier {
             throw new Exception("Different matrix sizes");
         } else {
 
-            int[][] a = A.getMatrix();
-            int[][] b = B.getMatrix();
+            //resizing for well weoking algorithm
+            int old_dim = A.getSize();
+            int new_dim = MatrixOperations.new_dim(A.getSize());
 
-            Borders a_borders = new Borders(0,0, A.getSize(), A.getSize());
-            Borders b_borders = new Borders(0,0, B.getSize(), B.getSize());
+            int[][] a = MatrixOperations.resize(A.getMatrix(), new_dim);
+            int[][] b = MatrixOperations.resize(B.getMatrix(), new_dim);
+
+            Borders a_borders = new Borders(0,0, new_dim, new_dim);
+            Borders b_borders = new Borders(0,0, new_dim, new_dim);
 
             int[][] result = rec_shtrassen_mult(a, b, a_borders ,b_borders);
 
-            return new SquareMatrix(result);
+            int[][] norma_result = MatrixOperations.resize(result, old_dim);
+            return new SquareMatrix(norma_result);
         }
 
     }
@@ -115,23 +119,24 @@ public class BigMatrixMultiplier {
             throw new Exception("Different matrix sizes");
         } else {
 
-            int[][] a = A.getMatrix();
-            int[][] b = B.getMatrix();
+            //resizing for well weoking algorithm
+            int old_dim = A.getSize();
+            int new_dim = MatrixOperations.new_dim(A.getSize());
 
-            Borders a_borders = new Borders(0,0, A.getSize(), A.getSize());
-            Borders b_borders = new Borders(0,0, B.getSize(), B.getSize());
+            int[][] a = MatrixOperations.resize(A.getMatrix(), new_dim);
+            int[][] b = MatrixOperations.resize(B.getMatrix(), new_dim);
+
+            Borders a_borders = new Borders(0,0, new_dim, new_dim);
+            Borders b_borders = new Borders(0,0, new_dim, new_dim);
 
 
             int[][] result = new MyRecursiveShtrassenTask(a, b, a_borders ,b_borders).compute();
 
-            return new SquareMatrix(result);
+            int[][] norma_result = MatrixOperations.resize(result, old_dim);
+            return new SquareMatrix(norma_result);
 
         }
-
     }
-
-
-
 
 }
 
