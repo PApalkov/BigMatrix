@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="BigMatrix:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/BigMatrix_jar</output-path>
+    <root id="archive" name="BigMatrix.jar">
+      <element id="module-output" name="BigMatrix" />
+    </root>
+  </artifact>
+</component>

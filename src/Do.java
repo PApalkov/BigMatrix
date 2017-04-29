@@ -8,9 +8,20 @@ public class Do {
 
     public static void main(String[] args) {
 
-        //int size = 1024;
+        int start_size = 100;
+        int stop_size = 1000;
+        int step = 150;
+
+        try {
+            start_size = Integer.parseInt(args[0]);
+            stop_size = Integer.parseInt(args[1]);
+            step = Integer.parseInt(args[2]);
+        } catch (NumberFormatException | IndexOutOfBoundsException e){
+            System.out.println(e.getMessage());
+        }
+
         //todo continue testing
-        for (int size = 100; size < 1300; size += 100) {
+        for (int size = start_size; size <= stop_size; size += step) {
 
             SquareMatrix A = new SquareMatrix(size);
             A.generate(0, 20);
@@ -45,7 +56,18 @@ public class Do {
                 System.out.println("\nRecursive algorithm takes " + rec_fork_mult_time + " seconds!");
 
 
-                String toWrite = size + "\n" + native_mult_time + "\n" + rec_mult_time + "\n" + rec_fork_mult_time + "\n";
+                String toWrite = String.valueOf(size);
+                write_file(toWrite);
+
+                toWrite = String.valueOf(native_mult_time);
+                write_file(toWrite);
+
+                toWrite = String.valueOf(rec_mult_time);
+                write_file(toWrite);
+
+                toWrite = String.valueOf(rec_fork_mult_time);
+                write_file(toWrite);
+
 
                 if (MatrixOperations.equal(C1, C3) && MatrixOperations.equal(C1, C2)) {
                     System.out.println("Results are equal");
@@ -55,8 +77,6 @@ public class Do {
                     //toWrite += "Results are NOT equal\n\n";
                 }
 
-                write_file(toWrite);
-
             } catch (Exception e) {
                 System.out.println(e.toString());
             }
@@ -65,12 +85,13 @@ public class Do {
     }
 
 
-    public static void write_file(String toWrite){
+    private static void write_file(String toWrite){
 
         File coded_file = new File( "multData.txt");
         try(FileWriter writer = new FileWriter(coded_file, true))
         {
             writer.write(toWrite);
+            writer.append("\r\n");
             writer.flush();
             writer.close();
 
