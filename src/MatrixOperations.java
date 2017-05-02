@@ -149,6 +149,20 @@ public class MatrixOperations {
     }
 
 
+    public static void combine(int[][] result, int[][] c11, int[][] c12, int[][] c21, int[][] c22){
+
+        int s_size = c11.length;
+
+        for (int i = 0; i < s_size; i++) {
+            for (int j = 0; j < s_size; j++) {
+                result[i][j] += c11[i][j];
+                result[i][j + s_size] += c12[i][j];
+                result[i + s_size][j] += c21[i][j];
+                result[i + s_size][j + s_size] += c22[i][j];
+            }
+        }
+    }
+
     public static boolean equal(SquareMatrix a, SquareMatrix b){
 
         if(a.getSize() != b.getSize()) {
@@ -205,4 +219,21 @@ public class MatrixOperations {
 
         else return matrix;
     }
+
+    public static boolean isZeroMatrix(int[][] matrix){
+
+        int size = matrix.length;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (matrix[i][j] != 0){
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+
+
 }

@@ -16,13 +16,18 @@ public class MyRecursiveShtrassenTask extends RecursiveTask<int[][]> {
         this.a_borders = a_borders;
         this.b_borders = b_borders;
         this.size = a_borders.i_end - a_borders.i_beg;
-
     }
 
     protected int[][] compute() {
 
-        if (size < MIN_SIZE){
+        if (MatrixOperations.isZeroMatrix(a) || MatrixOperations.isZeroMatrix(b)) {
+
+            return new int[size][size];
+
+        } else if (size < MIN_SIZE) {
+
             return MatrixOperations.native_border_mult(a, b, a_borders, b_borders);
+
         } else {
             //making borders for smaller parts
             Borders a_1_1 = new Borders();

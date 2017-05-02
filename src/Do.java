@@ -8,9 +8,9 @@ public class Do {
 
     public static void main(String[] args) {
 
-        int start_size = 100;
-        int stop_size = 1000;
-        int step = 150;
+        int start_size = 3000;
+        int stop_size = 3100;
+        int step = 1500;
 
         try {
             start_size = Integer.parseInt(args[0]);
@@ -32,8 +32,11 @@ public class Do {
 
             try {
 
+                System.out.println("Size: " + size);
+
                 long naitive_mult_time_start = System.nanoTime();
-                SquareMatrix C1 = BigMatrixMultiplier.native_mult(A, B);
+                //SquareMatrix C1 = BigMatrixMultiplier.native_mult(A, B);
+                SquareMatrix C1 = BigMatrixMultiplier.shtrassen_fork_mult2(A, B);
                 long naitive_mult_time_end = System.nanoTime();
 
                 double native_mult_time = (naitive_mult_time_end - naitive_mult_time_start) / Math.pow(10, 9);

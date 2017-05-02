@@ -88,6 +88,8 @@ public class SquareMatrix {
         }
     }
 
+
+
     public String toString() {
         String matrix_str = "[\n";
 

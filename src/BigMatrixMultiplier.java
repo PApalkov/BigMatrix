@@ -64,12 +64,18 @@ public class BigMatrixMultiplier {
     }
 
 
-    private static int[][] rec_shtrassen_mult(int[][] a, int[][] b, Borders a_borders, Borders b_borders){
+    public static int[][] rec_shtrassen_mult(int[][] a, int[][] b, Borders a_borders, Borders b_borders){
 
         int size = a_borders.i_end - a_borders.i_beg;
 
-        if (size < MIN_SIZE){
+        if (MatrixOperations.isZeroMatrix(a) || MatrixOperations.isZeroMatrix(b)) {
+
+            return new int[size][size];
+
+        } else if (size < MIN_SIZE) {
+
             return MatrixOperations.native_border_mult(a, b, a_borders, b_borders);
+
         } else {
             //making borders for smaller parts
             Borders a_1_1 = new Borders();
@@ -137,6 +143,86 @@ public class BigMatrixMultiplier {
 
             int[][] result = new MyRecursiveShtrassenTask(a, b, a_borders ,b_borders).compute();
 
+            int[][] norma_result = MatrixOperations.resize(result, old_dim);
+            return new SquareMatrix(norma_result);
+
+        }
+    }
+
+
+    //it makes 4 threads only
+    public static SquareMatrix shtrassen_fork_mult2(SquareMatrix A, SquareMatrix B) throws Exception{
+        if (A.getSize() != B.getSize()){
+            throw new Exception("Different matrix sizes");
+        } else {
+
+            //resizing for well wellwoking algorithm
+            int old_dim = A.getSize();
+            int new_dim = MatrixOperations.new_dim(A.getSize());
+
+            int[][] a = MatrixOperations.resize(A.getMatrix(), new_dim);
+            int[][] b = MatrixOperations.resize(B.getMatrix(), new_dim);
+
+            Borders a_borders = new Borders(0,0, new_dim, new_dim);
+            Borders b_borders = new Borders(0,0, new_dim, new_dim);
+
+            Borders a_1_1 = new Borders();
+            Borders a_1_2 = new Borders();
+            Borders a_2_1 = new Borders();
+            Borders a_2_2 = new Borders();
+
+            Borders b_1_1 = new Borders();
+            Borders b_1_2 = new Borders();
+            Borders b_2_1 = new Borders();
+            Borders b_2_2 = new Borders();
+
+            //giving values to borders' parts
+            MatrixOperations.divide(a_borders, a_1_1, a_1_2, a_2_1, a_2_2);
+            MatrixOperations.divide(b_borders, b_1_1, b_1_2, b_2_1, b_2_2);
+
+            //first 4 threads
+            MyThread c11_task = new MyThread(a, b, a_1_1, b_1_1);
+            MyThread c12_task = new MyThread(a, b, a_1_1, b_1_2);
+            MyThread c21_task = new MyThread(a, b, a_2_1, b_1_1);
+            MyThread c22_task = new MyThread(a, b, a_2_1, b_1_2);
+
+            //waiting for the end of all threads
+            c11_task.getT().join();
+            c12_task.getT().join();
+            c21_task.getT().join();
+            c22_task.getT().join();
+
+            //remembering threads' results
+            int[][] c_1_1 = c11_task.getResult();
+            int[][] c_1_2 = c12_task.getResult();
+            int[][] c_2_1 = c21_task.getResult();
+            int[][] c_2_2 = c22_task.getResult();
+
+
+            int[][] result = new int[new_dim][new_dim];
+
+            MatrixOperations.combine(result, c_1_1, c_1_2, c_2_1, c_2_2);
+
+            //second 4 threads
+            c11_task = new MyThread(a, b, a_1_2, b_2_1);
+            c12_task = new MyThread(a, b, a_1_2, b_2_2);
+            c21_task = new MyThread(a, b, a_2_2, b_2_1);
+            c22_task = new MyThread(a, b, a_2_2, b_2_2);
+
+            c11_task.getT().join();
+            c12_task.getT().join();
+            c21_task.getT().join();
+            c22_task.getT().join();
+
+            c_1_1 = c11_task.getResult();
+            c_1_2 = c12_task.getResult();
+            c_2_1 = c21_task.getResult();
+            c_2_2 = c22_task.getResult();
+
+
+            MatrixOperations.combine(result, c_1_1, c_1_2, c_2_1, c_2_2);
+
+            //normalization
             int[][] norma_result = MatrixOperations.resize(result, old_dim);
             return new SquareMatrix(norma_result);
 
